@@ -8,14 +8,20 @@
         <version>2.6.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>pl.example</groupId>
     <artifactId>reactdict</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>reactdict</name>
     <description>reactdict</description>
+
+
     <properties>
         <java.version>11</java.version>
+        <version.assertj>3.21.0</version.assertj>
     </properties>
+
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -30,6 +36,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
         </dependency>
 
         <dependency>
