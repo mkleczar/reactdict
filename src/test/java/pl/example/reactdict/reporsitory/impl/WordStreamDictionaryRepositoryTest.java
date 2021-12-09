@@ -15,7 +15,7 @@ public class WordStreamDictionaryRepositoryTest {
 
     @Test
     public void testFindingWordsByRegex() {
-        DictionaryRepository repo = new WordStreamDictionaryRepository(new FromFileWordStreamService());
+        DictionaryRepository repo = new WordStreamDictionaryRepository(new FromFileWordStreamService("data//slowa.txt"));
         Flux<String> result = repo.find("d.*ariusz.*");
         List<String> list = result.collectList().block();
         assertThat(list)
