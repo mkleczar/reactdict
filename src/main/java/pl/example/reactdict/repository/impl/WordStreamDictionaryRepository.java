@@ -1,5 +1,6 @@
 package pl.example.reactdict.repository.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.example.reactdict.repository.DictionaryRepository;
 import reactor.core.publisher.Flux;
@@ -8,6 +9,7 @@ import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+@Slf4j
 @Service
 public class WordStreamDictionaryRepository implements DictionaryRepository {
 
@@ -21,6 +23,8 @@ public class WordStreamDictionaryRepository implements DictionaryRepository {
     public Flux<String> find(String regex) {
         Pattern pattern = Pattern.compile(regex);
         return Flux.fromStream(words.get()
-                .filter(w -> pattern.matcher(w).matches()));
+                .filter(w -> pattern.matcher(w).matches())
+                //.peek(s -> log.info("Word: {} match to regex: {}", s, regex))
+        );
     }
 }
