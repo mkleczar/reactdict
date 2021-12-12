@@ -27,7 +27,10 @@ public class DictionaryServiceImpl implements DictionaryService {
         List<String> regexes = regexesWithLetteLimits(allowedLetters);
         String regexWord = String.format("[%s]{1,%d}", allowedLetters, allowedLetters.length());
         regexes.add(regexWord);
-        return dictionaryRepository.find(regexes);
+        return dictionaryRepository.find(regexes)
+                .doOnNext(str -> log.info("Wynik dla liter: {}: {}", allowedLetters, str))
+                .doOnComplete(() -> log.info("Wyszukiwanie dla liter '{}' zakonczone", allowedLetters))
+                ;
     }
 
     @Override
