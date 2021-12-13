@@ -3,10 +3,7 @@ package pl.example.reactdict.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.example.reactdict.service.DictionaryService;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,13 +12,14 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/dict")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class DictionaryController {
 
     private final DictionaryService dictionaryService;
 
     @GetMapping("/test")
-    public String test() {
-        return "To jest test";
+    public Mono<String> test() {
+        return Mono.just("{\"value\":\"To jest test\"}");
     }
 
     @GetMapping(value = "/letters/{letters}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
