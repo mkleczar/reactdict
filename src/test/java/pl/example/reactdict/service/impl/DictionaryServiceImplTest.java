@@ -7,8 +7,15 @@ import pl.example.reactdict.model.Blanks;
 import pl.example.reactdict.repository.impl.FromFileWordStreamService;
 import pl.example.reactdict.repository.impl.WordStreamDictionaryRepository;
 import pl.example.reactdict.service.DictionaryService;
+import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 import reactor.test.StepVerifier;
+
+import java.time.Duration;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Slf4j
 public class DictionaryServiceImplTest {
@@ -41,5 +48,24 @@ public class DictionaryServiceImplTest {
         StepVerifier.create(result)
                 .expectNext("jaklom", "jolkom", "kalmij", "klejem", "klejmy", "klejom", "klujmy", "lajkom", "lejkom")
                 .verifyComplete();
+    }
+
+    @Test
+    public void asyncTest() throws InterruptedException {
+        String letters = "mariusz";
+        //Scheduler scheduler = Schedulers.newBoundedElastic(5, 10, "MyBoy");
+        Scheduler scheduler = Schedulers.fromExecutorService(Executors.newFixedThreadPool(5));
+
+        service.allPossibleWords("mariusz").delayElements(Duration.ofMillis(200)).subscribe(str -> log.info("Mariusz:  {}", str));
+        //service.allPossibleWords("donpedro").subscribe(str -> log.info("DonPedro: {}", str));
+        log.info("I am here");
+        //Thread.sleep(6_000);
+    }
+
+    @Test
+    public void asyncMonoTest() throws InterruptedException {
+        service.isWordValid("koryto").delayElement(Duration.ofMillis(200)).subscribe(b -> log.info("koryto is valud? :{}", b));
+        log.info("I am here");
+        Thread.sleep(6_000);
     }
 }

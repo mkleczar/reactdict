@@ -24,8 +24,8 @@ public class WordStreamDictionaryRepository implements DictionaryRepository {
     @Override
     public Flux<String> find(String regex) {
         Pattern pattern = Pattern.compile(regex);
-        return Flux.fromStream(words.get()
-                .filter(w -> pattern.matcher(w).matches())
+        return Flux.fromStream(words.get())
+                .filter(w -> pattern.matcher(w).matches()
                 //.peek(s -> log.info("Word: {} match to regex: {}", s, regex))
         );
     }
