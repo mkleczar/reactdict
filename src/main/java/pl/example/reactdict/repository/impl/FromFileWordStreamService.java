@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 @Service
 public class FromFileWordStreamService implements Supplier<Stream<String>> {
 
-
     private final String fileName;
 
     public FromFileWordStreamService(@Value("${dictionary.file}") String fileName) {

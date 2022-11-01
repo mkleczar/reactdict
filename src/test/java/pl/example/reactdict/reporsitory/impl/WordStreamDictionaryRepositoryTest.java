@@ -29,8 +29,8 @@ public class WordStreamDictionaryRepositoryTest {
 
     @Test
     public void testFindingWordsByRegex() {
-        String regex = "d.*ariusz.*";
-        Flux<String> result = dictionaryRepository.find(regex);
+        String regex = "^d.*ariusz.*";
+        Flux<String> result = dictionaryRepository.find(regex).log();
         StepVerifier.create(result)
                 .expectNextCount(84)
                 .verifyComplete();

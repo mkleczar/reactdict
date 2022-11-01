@@ -4,9 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import pl.example.reactdict.model.Blanks;
+import pl.example.reactdict.repository.DictionaryRepository;
 import pl.example.reactdict.repository.impl.FromFileWordStreamService;
 import pl.example.reactdict.repository.impl.WordStreamDictionaryRepository;
 import pl.example.reactdict.service.DictionaryService;
+import pl.example.reactdict.service.RegexComposerService;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Scheduler;
@@ -24,9 +26,12 @@ public class DictionaryServiceImplTest {
 
     @BeforeAll
     public static void beforeAll() {
+        RegexComposerService regexComposerService = new RegexComposerJavaServiceImpl();
+        DictionaryRepository dictionaryRepository = new WordStreamDictionaryRepository(
+                new FromFileWordStreamService("data//slowa.txt"));
+
         service = new DictionaryServiceImpl(
-                new WordStreamDictionaryRepository(
-                        new FromFileWordStreamService("data//slowa.txt")));
+                dictionaryRepository, regexComposerService);
     }
 
     @Test

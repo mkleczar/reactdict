@@ -1,6 +1,11 @@
 package pl.example.reactdict.repository.impl;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Conditional;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import pl.example.reactdict.repository.DictionaryRepository;
 import reactor.core.publisher.Flux;
@@ -13,12 +18,13 @@ import java.util.stream.Stream;
 
 @Slf4j
 @Service
+@ConditionalOnProperty(name = "repository.type", havingValue = "memory")
 public class WordStreamDictionaryRepository implements DictionaryRepository {
 
     private final Supplier<Stream<String>> words;
 
-    public WordStreamDictionaryRepository(Supplier<Stream<String>> wordListSupplier) {
-        this.words = wordListSupplier;
+    public WordStreamDictionaryRepository(Supplier<Stream<String>> words) {
+        this.words = words;
     }
 
     @Override
