@@ -35,7 +35,8 @@ public class MongoDictionaryRepository implements DictionaryRepository {
     @Override
     public Flux<String> find(List<String> regexes) {
         String totalRegex = regexes.stream()
-                .collect(Collectors.joining(")(?=", "(?=", ").*"));
+                .collect(Collectors.joining(")(?=", "(?=", ")"));
+        log.info("Regex to send: {}", totalRegex);
         return repository.findAllByWordMatchesRegex(totalRegex)
                 .map(Words::getWord);
     }

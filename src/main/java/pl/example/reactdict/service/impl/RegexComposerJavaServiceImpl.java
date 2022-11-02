@@ -14,7 +14,7 @@ public class RegexComposerJavaServiceImpl implements RegexComposerService {
     @Override
     public List<String> regexForWordFromLetters(String allowedLetters) {
         List<String> regexes = regexesWithLetterLimits(allowedLetters);
-        String regexWord = String.format("[%s]{1,%d}", allowedLetters, allowedLetters.length());
+        String regexWord = String.format("^[%s]{1,%d}$", allowedLetters, allowedLetters.length());
         regexes.add(regexWord);
         return regexes;
     }

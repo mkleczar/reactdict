@@ -38,6 +38,7 @@ public class WordStreamDictionaryRepository implements DictionaryRepository {
 
     @Override
     public Flux<String> find(List<String> regexes) {
+        log.info("Regexes to check: {}", regexes);
         Predicate<String> predicate = regexes.stream()
                 .map(Pattern::compile)
                 .<Predicate<String>>map(pattern -> (String str) -> pattern.matcher(str).matches())
