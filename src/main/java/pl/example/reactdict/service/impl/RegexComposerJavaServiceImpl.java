@@ -28,7 +28,7 @@ public class RegexComposerJavaServiceImpl implements RegexComposerService {
     }
 
     private List<String> regexesWithLetterLimits(String allowedLetters) {
-        String regexTemplate = "([^%1$s]*%1$s){0,%2$d}[^%1$s]*";
+        String regexTemplate = "^([^%1$s]*%1$s){0,%2$d}[^%1$s]*$";
         return Stream.of(allowedLetters.split("(?!^)"))
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .entrySet().stream()

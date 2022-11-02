@@ -59,9 +59,9 @@ public class DictionaryTest {
 
     @Test
     public void testFindingWordsByRegex3() {
-        String regexM = "([^m]*m){0,2}[^m]*";
-        String regexA = "([^a]*a){0,2}[^a]*";
-        String regex = "(?=" + regexM +")(?=" + regexA + ")(?=^[mmaa]{1,4}$)";
+        String regexM = "^([^m]*m){0,2}[^m]*$";
+        String regexA = "^([^a]*a){0,2}[^a]*$";
+        String regex = "(?=" + regexM +")(?=" + regexA + ")(?=^[ma]{1,4}$)";
         log.info("regex: {}", regex);
         List<Words> result = repository.findAllByWordMatchesRegex(regex)
                 .log()
